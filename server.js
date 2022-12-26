@@ -1,7 +1,12 @@
-const express = require("express");
-const path = require("path");
+const path = require('path');
+const express = require('express');
 const app = express();
-
-//This will create a middleware.
-//When you navigate to the root page, it would use the built react-app
-app.use(express.static(path.resolve(__dirname, "./client/build")));
+const publicPath = path.join(__dirname, '..', 'challenge-dash/build');
+const port = process.env.PORT || 3000;
+app.use(express.static(publicPath));
+app.get('*', (req, res) => {
+   res.sendFile(path.join(publicPath, 'index.html'));
+});
+app.listen(port, () => {
+   console.log('Server is up!');
+});
